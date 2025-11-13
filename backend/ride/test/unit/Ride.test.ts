@@ -1,6 +1,17 @@
-import Account from "../../src/domain/entity/Account";
 import Position from "../../src/domain/entity/Position";
 import Ride from "../../src/domain/entity/Ride";
+import AccountGateway from "../../src/application/gateway/AccountGateway";
+import { AxiosAdapter } from "../../src/infra/http/HttpClient";
+import AccountGatewayHttp from "../../src/infra/gateway/AccountGatewayHttps";
+
+let accountGateway: AccountGateway
+
+beforeEach(() => {
+
+	const httpClient = new AxiosAdapter
+	accountGateway = new AccountGatewayHttp(httpClient);
+
+});
 
 test("Não deve criar uma corrida com coordenada inválida", function () {
 	expect(() => Ride.create("", -180, 180, -180, 180)).toThrow(new Error("Invalid latitude"));
@@ -8,7 +19,10 @@ test("Não deve criar uma corrida com coordenada inválida", function () {
 
 test("Deve calcular a distância da corrida", function () {
 	const ride = Ride.create("", 0, 0, 0, 0);
-	const account = Account.create("John Doe", "john.doe@gmail.com", "97456321558", "AAA9999", false, true);
+	const signupData = {
+		name: "John Doe", email: "john.doe@gmail.com", cpf: "97456321558", carPlate: "AAA9999", isPassenger: false, isDriver: true
+	}
+	const account = accountGateway.signup(signupData);
 	ride.accept(account);
 	ride.start();
 	const lastPosition = Position.create("", -27.584905257808835, -48.545022195325124);

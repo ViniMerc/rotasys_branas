@@ -1,6 +1,6 @@
-import MailerGateway from "../../src/application/gateway/MailerGateway";
+ 
 import PaymentGateway from "../../src/application/gateway/PaymentGateway";
-import GetAccount from "../../src/application/usecase/account/GetAccount";
+ 
 import Signup from "../../src/application/usecase/account/Signup";
 import ProcessPayment from "../../src/application/usecase/payment/ProcessPayment";
 import AcceptRide from "../../src/application/usecase/ride/AcceptRide";
@@ -11,14 +11,12 @@ import StartRide from "../../src/application/usecase/ride/StartRide";
 import DatabaseConnection, { PgPromiseAdapter } from "../../src/infra/database/DatabaseConnection";
 import MailerGatewayFake from "../../src/infra/gateway/MailerGatewayFake";
 import PaymentGatewayFake from "../../src/infra/gateway/PaymentGatewayFake";
-import { AccountRepositoryDatabase } from "../../src/infra/repository/AccountRepository";
-import PaymentRepositoryDatabase from "../../src/infra/repository/PaymentRepositoryDatabase";
+ 
 import PositionRepositoryDatabase from "../../src/infra/repository/PositionRepositoryDatabase";
 import RideRepositoryDatabase from "../../src/infra/repository/RideRepositoryDatabase";
 
 let connection: DatabaseConnection;
 let signup: Signup;
-let mailerGateway: MailerGateway;
 let paymentGateway: PaymentGateway
 let requestRide: RequestRide;
 let getRide: GetRide;
