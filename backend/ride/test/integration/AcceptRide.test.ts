@@ -1,27 +1,24 @@
-import MailerGateway from "../../src/application/gateway/MailerGateway";
-import GetAccount from "../../src/application/usecase/account/GetAccount";
+import AccountGateway from "../../src/application/gateway/AccountGateway";
 import Signup from "../../src/application/usecase/account/Signup";
 import AcceptRide from "../../src/application/usecase/ride/AcceptRide";
 import GetRide from "../../src/application/usecase/ride/GetRide";
 import RequestRide from "../../src/application/usecase/ride/RequestRide";
 import DatabaseConnection, { PgPromiseAdapter } from "../../src/infra/database/DatabaseConnection";
+import AccountGatewayHttp from "../../src/infra/gateway/AccountGatewayHttps";
 import MailerGatewayFake from "../../src/infra/gateway/MailerGatewayFake";
-import { AccountRepositoryDatabase } from "../../src/infra/repository/AccountRepository";
 import PositionRepositoryDatabase from "../../src/infra/repository/PositionRepositoryDatabase";
 import RideRepositoryDatabase from "../../src/infra/repository/RideRepositoryDatabase";
 
 let connection: DatabaseConnection;
 let signup: Signup;
-let mailerGateway: MailerGateway;
 let requestRide: RequestRide;
 let getRide: GetRide;
 let acceptRide: AcceptRide;
+let accountGateway: AccountGateway
 
 beforeEach(() => {
 	connection = new PgPromiseAdapter();
-	const accountRepository = new AccountRepositoryDatabase(connection);
-	mailerGateway = new MailerGatewayFake();
-	signup = new Signup(accountRepository, mailerGateway);
+	accountGateway = new AccountGatewayHttp();
 	const rideRepository = new RideRepositoryDatabase(connection);
 	const positionRepository = new PositionRepositoryDatabase(connection);
 	requestRide = new RequestRide(rideRepository, accountRepository);
@@ -36,7 +33,7 @@ test("Deve aceitar uma corrida", async function () {
 		cpf: "97456321558",
 		isPassenger: true
 	}
-	const outputSignupPassenger = await signup.execute(inputSignupPassenger);
+	const outputSignupPassenger = await accountGateway.signup(inputSignupPassenger);
 	const inputRequestRide = {
 		passengerId: outputSignupPassenger.accountId,
 		fromLat: -27.584905257808835,
