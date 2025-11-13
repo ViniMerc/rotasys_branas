@@ -1,6 +1,6 @@
- 
+
 import PaymentGateway from "../../src/application/gateway/PaymentGateway";
- 
+
 import Signup from "../../src/application/usecase/account/Signup";
 import ProcessPayment from "../../src/application/usecase/payment/ProcessPayment";
 import AcceptRide from "../../src/application/usecase/ride/AcceptRide";
@@ -9,9 +9,8 @@ import GetRide from "../../src/application/usecase/ride/GetRide";
 import RequestRide from "../../src/application/usecase/ride/RequestRide";
 import StartRide from "../../src/application/usecase/ride/StartRide";
 import DatabaseConnection, { PgPromiseAdapter } from "../../src/infra/database/DatabaseConnection";
-import MailerGatewayFake from "../../src/infra/gateway/MailerGatewayFake";
-import PaymentGatewayFake from "../../src/infra/gateway/PaymentGatewayFake";
- 
+import PaymentGatewayFake from "../../src/infra/gateway/PaymentGatewayHttps";
+
 import PositionRepositoryDatabase from "../../src/infra/repository/PositionRepositoryDatabase";
 import RideRepositoryDatabase from "../../src/infra/repository/RideRepositoryDatabase";
 
@@ -28,8 +27,7 @@ let processPayment: ProcessPayment
 beforeEach(() => {
 	connection = new PgPromiseAdapter();
 	const accountRepository = new AccountRepositoryDatabase(connection);
-	mailerGateway = new MailerGatewayFake();
-	paymentGateway = new PaymentGatewayFake()
+ 	paymentGateway = new PaymentGatewayFake()
 	signup = new Signup(accountRepository, mailerGateway);
 	const rideRepository = new RideRepositoryDatabase(connection);
 	const positionRepository = new PositionRepositoryDatabase(connection);
