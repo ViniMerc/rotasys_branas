@@ -9,6 +9,7 @@ import StartRide from "../../src/application/usecase/ride/StartRide";
 import DatabaseConnection, { PgPromiseAdapter } from "../../src/infra/database/DatabaseConnection";
 import MailerGatewayFake from "../../src/infra/gateway/MailerGatewayFake";
 import { AccountRepositoryDatabase } from "../../src/infra/repository/AccountRepository";
+import PaymentRepositoryDatabase from "../../src/infra/repository/PaymentRepositoryDatabase";
 import PositionRepositoryDatabase from "../../src/infra/repository/PositionRepositoryDatabase";
 import RideRepositoryDatabase from "../../src/infra/repository/RideRepositoryDatabase";
 
@@ -28,11 +29,12 @@ beforeEach(() => {
 	signup = new Signup(accountRepository, mailerGateway);
 	const rideRepository = new RideRepositoryDatabase(connection);
 	const positionRepository = new PositionRepositoryDatabase(connection);
+	const paymentRepository = new PaymentRepositoryDatabase(connection)
 	requestRide = new RequestRide(rideRepository, accountRepository);
 	getRide = new GetRide(rideRepository, accountRepository, positionRepository);
 	acceptRide = new AcceptRide(rideRepository, accountRepository);
 	startRide = new StartRide(rideRepository);
-	finishRide = new FinishRide(rideRepository)
+	finishRide = new FinishRide(rideRepository, paymentRepository)
 });
 
 test("Deve encerrar uma corrida", async function () {
@@ -68,14 +70,13 @@ test("Deve encerrar uma corrida", async function () {
 		rideId: outputRequestRide.rideId
 	}
 	await startRide.execute(inputStartRide);
-
-
-	await finishRide.execute(inputStartRide)
-
-
-
-
-
+	const inputFinishRide = {
+		rideId: outputRequestRide.rideId,
+		amount: 23,
+		date: new Date(),
+		status: "closed",
+	}
+	await finishRide.execute(inputFinishRide)
 	const outputGetRide = await getRide.execute(outputRequestRide.rideId);
 	expect(outputGetRide.status).toBe("closed");
 });
