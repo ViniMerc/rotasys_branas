@@ -11,15 +11,10 @@ export default class FinishRide implements UseCase {
 	async execute(input: Input): Promise<void> {
 		const ride = await this.rideRepository.getRideById(input.rideId);
 		ride.finish();
-		const payment = Payment.create(input.rideId, input.amount, input.date, input.status)
-		await this.paymentRepository.savePayment(payment)
 		await this.rideRepository.updateRide(ride);
 	}
 }
 
 type Input = {
 	rideId: string,
-	amount: number,
-	date: Date,
-	status: string,
 }
