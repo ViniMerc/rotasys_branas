@@ -1,16 +1,18 @@
 import Ride from "../../../domain/entity/Ride";
-import AccountRepository from "../../repository/AccountRepository";
+import AccountGateway from "../../gateway/AccountGateway";
 import RideRepository from "../../repository/RideRepository";
 import UseCase from "../UseCase";
 
 export default class RequestRide implements UseCase {
 
-	constructor (readonly rideRepository: RideRepository, readonly accountRepository: AccountRepository) {
+	constructor(readonly rideRepository: RideRepository, readonly accountGateway: AccountGateway) {
 	}
 
 	async execute(input: Input): Promise<Output> {
-		// application business rules
-		const account = await this.accountRepository.getAccountById(input.passengerId);
+ 		// application business rules
+			 
+		const account = await this.accountGateway.getAccountById(input.passengerId);
+	
 		if (!account.isPassenger) throw new Error("This account is not from passenger");
 		const hasActiveRide = await this.rideRepository.hasActiveRideByPassengerId(input.passengerId);
 		if (hasActiveRide) throw new Error("This passenger has an active ride");

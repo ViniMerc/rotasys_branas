@@ -1,5 +1,4 @@
 import axios from "axios";
-import fetch from "node-fetch";
 
 // Se S é subclasse de T então objetos do tipo T podem ser substituídos por objetos do tipo S sem quebrar o funcionamento do programa
 
@@ -10,6 +9,12 @@ export default interface HttpClient {
 }
 
 // S
+
+axios.defaults.validateStatus = function () {
+	return true;
+}
+
+
 export class AxiosAdapter implements HttpClient {
 
 	async get(url: string): Promise<any> {
@@ -31,23 +36,23 @@ export class AxiosAdapter implements HttpClient {
 
 }
 
-// S
-export class FetchAdapter implements HttpClient {
+// // S
+// export class FetchAdapter implements HttpClient {
 
-	async get(url: string): Promise<any> {
-		const response = await fetch(url);
-		return response.json();
-	}
+// 	async get(url: string): Promise<any> {
+// 		const response = await fetch(url);
+// 		return response.json();
+// 	}
 
-	async post(url: string, body: any): Promise<any> {
-		const response = await fetch(url, {
-			method: "post",
-			headers: {
-				"content-type": "application/json"
-			},
-			body: JSON.stringify(body)
-		});
-		return response.json();
-	}
+// 	async post(url: string, body: any): Promise<any> {
+// 		const response = await fetch(url, {
+// 			method: "post",
+// 			headers: {
+// 				"content-type": "application/json"
+// 			},
+// 			body: JSON.stringify(body)
+// 		});
+// 		return response.json();
+// 	}
 
-}
+// }

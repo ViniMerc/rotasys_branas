@@ -74,7 +74,7 @@ test("Não deve poder solicitar uma corrida se a conta não for de um passageiro
 	await expect(() => requestRide.execute(inputRequestRide)).rejects.toThrow(new Error("This account is not from passenger"));
 });
 
-test("Não deve poder solicitar uma corrida se o passageiro já tiver outra corrida não finalizada", async function () {
+test ("Não deve poder solicitar uma corrida se o passageiro já tiver outra corrida não finalizada", async function () {
 	const inputSignup = {
 		name: "John Doe",
 		email: `john.doe${Math.random()}@gmail.com`,

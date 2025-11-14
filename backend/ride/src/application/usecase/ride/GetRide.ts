@@ -1,11 +1,14 @@
-import AccountRepository from "../../repository/AccountRepository";
+ import AccountGateway from "../../gateway/AccountGateway";
 import PositionRepository from "../../repository/PositionRepository";
 import RideRepository from "../../repository/RideRepository";
 import UseCase from "../UseCase";
 
-export default class GetRide implements UseCase {
+let accountGateway: AccountGateway
 
-	constructor (readonly rideRepository: RideRepository, readonly accountRepository: AccountRepository, readonly positionRepository: PositionRepository) {
+export default class GetRide implements UseCase {
+	
+
+	constructor (readonly rideRepository: RideRepository, readonly accountRepository: AccountGateway, readonly positionRepository: PositionRepository) {
 	}
 
 	async execute(rideId: string): Promise<Output> {

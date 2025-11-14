@@ -9,7 +9,9 @@ export default class AccountGatewayHttp implements AccountGateway {
 	}
 
 	async signup(input: any): Promise<any> {
-		const response = await this.httpClient.post("http://localhost:3001/signup", input);
+
+ 		const response = await this.httpClient.post("http://localhost:3001/signup", input);
+				console.log(response)
 		return response;
 	}
 
