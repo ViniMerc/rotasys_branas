@@ -1,3 +1,5 @@
+import axios from "axios";
+
 export default class SignupWizard {
 	step = 1;
 	isPassenger = false;
@@ -70,10 +72,10 @@ export default class SignupWizard {
 			cpf: this.cpf,
 			isPassenger: this.isPassenger
 		}
-		// const response = await axios.post("http://localhost:3001/signup", input);
-		// const output = response.data;
+		 const response = await axios.post("http://localhost:3000/signup", input);
+		 const output = response.data;
 		this.successMessage = "Conta criada com sucesso!";
-		// this.accountId = output.accountId;
+		 this.accountId = output.accountId;
 		this.accountId = "123";
 	}
 

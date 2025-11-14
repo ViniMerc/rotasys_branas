@@ -13,7 +13,7 @@ export class AccountGatewayHttp implements AccountGateway {
     }
 
     signup(input: any): Promise<any> {
-        return this.httpClient.post("http://localhost:3001/signup", input);
+        return this.httpClient.post("http://localhost:3000/signup", input);
     }
 
 }

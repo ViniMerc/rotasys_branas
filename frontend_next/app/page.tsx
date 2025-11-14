@@ -11,6 +11,11 @@ function App() {
 		setWizard(clone(wizard));
 	}
 
+	 
+
+	 
+	
+
 	return (
 		<div>
 			{ !wizard.successMessage && <div>
