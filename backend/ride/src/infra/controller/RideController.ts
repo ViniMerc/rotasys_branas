@@ -8,7 +8,6 @@ export default class RideController {
     constructor(readonly httpServer: HttpServer, readonly requestRide: RequestRide, readonly getRide: GetRide,) {
         httpServer.register("post", "/request_ride", async (params: any, body: any) => {
             const response = await requestRide.execute(body);
-            console.log(response);
             return response;
         });
 

@@ -196,7 +196,7 @@ test("Deve criar uma conta de passageiro com mock no MailerGateway", async funct
 	}
 	const mockMailerGateway = sinon.mock(MailerGatewayFake.prototype);
 	mockMailerGateway.expects("send").withArgs(inputSignup.email, "Welcome!", "").once().callsFake(() => {
-		console.log("abc");
+		console.log("mockMailerGate");
 	});
 	const outputSignup = await signup.execute(inputSignup);
 	expect(outputSignup.accountId).toBeDefined();

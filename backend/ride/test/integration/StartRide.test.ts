@@ -48,25 +48,25 @@ test("Deve iniciar uma corrida", async function () {
 		toLong: -48.522234807851476
 	}
 	const outputRequestRide = await requestRide.execute(inputRequestRide);
-	// const inputSignupDriver = {
-	// 	name: "John Doe",
-	// 	email: `john.doe${Math.random()}@gmail.com`,
-	// 	cpf: "97456321558",
-	// 	carPlate: "AAA9999",
-	// 	isDriver: true
-	// }
-	// const outputSignupDriver = await accountGateway.signup(inputSignupDriver);
-	// const inputAcceptRide = {
-	// 	rideId: outputRequestRide.rideId,
-	// 	driverId: outputSignupDriver.accountId
-	// }
-	// await acceptRide.execute(inputAcceptRide);
-	// const inputStartRide = {
-	// 	rideId: outputRequestRide.rideId
-	// }
-	// await startRide.execute(inputStartRide);
-	// const outputGetRide = await getRide.execute(outputRequestRide.rideId);
-	// expect(outputGetRide.status).toBe("in_progress");
+	const inputSignupDriver = {
+		name: "John Doe",
+		email: `john.doe${Math.random()}@gmail.com`,
+		cpf: "97456321558",
+		carPlate: "AAA9999",
+		isDriver: true
+	}
+	const outputSignupDriver = await accountGateway.signup(inputSignupDriver);
+	const inputAcceptRide = {
+		rideId: outputRequestRide.rideId,
+		driverId: outputSignupDriver.accountId
+	}
+	await acceptRide.execute(inputAcceptRide);
+	const inputStartRide = {
+		rideId: outputRequestRide.rideId
+	}
+	await startRide.execute(inputStartRide);
+	const outputGetRide = await getRide.execute(outputRequestRide.rideId);
+	expect(outputGetRide.status).toBe("in_progress");
 });
 
 afterEach(async () => {
