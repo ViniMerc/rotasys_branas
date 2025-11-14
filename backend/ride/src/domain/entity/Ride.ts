@@ -32,6 +32,7 @@ export default class Ride {
 	}
 
 	accept(account: any) {
+		 
 		if (!account.isDriver) throw new Error("Account is not from a driver");
 		if (this.status !== "requested") throw new Error("Invalid status");
 		this.driverId = account.accountId;
