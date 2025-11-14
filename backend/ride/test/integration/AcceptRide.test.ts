@@ -1,5 +1,4 @@
 import AccountGateway from "../../src/application/gateway/AccountGateway";
-import Signup from "../../src/application/usecase/account/Signup";
 import AcceptRide from "../../src/application/usecase/ride/AcceptRide";
 import GetRide from "../../src/application/usecase/ride/GetRide";
 import RequestRide from "../../src/application/usecase/ride/RequestRide";
@@ -10,7 +9,6 @@ import PositionRepositoryDatabase from "../../src/infra/repository/PositionRepos
 import RideRepositoryDatabase from "../../src/infra/repository/RideRepositoryDatabase";
 
 let connection: DatabaseConnection;
-let signup: Signup;
 let requestRide: RequestRide;
 let getRide: GetRide;
 let acceptRide: AcceptRide;

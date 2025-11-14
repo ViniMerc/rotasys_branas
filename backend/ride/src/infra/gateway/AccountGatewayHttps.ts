@@ -10,13 +10,13 @@ export default class AccountGatewayHttp implements AccountGateway {
 
 	async signup(input: any): Promise<any> {
 
- 		const response = await this.httpClient.post("http://localhost:3001/signup", input);
+ 		const response = await this.httpClient.post("http://localhost:3000/signup", input);
 				console.log(response)
 		return response;
 	}
 
 	async getAccountById(accountId: string): Promise<any> {
-		const response = await this.httpClient.get(`http://localhost:3001/accounts/${accountId}`);
+		const response = await this.httpClient.get(`http://localhost:3000/accounts/${accountId}`);
 		return response;
 	}
 

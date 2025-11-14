@@ -15,4 +15,4 @@ Registry.getInstance().provide("httpServer", httpServer);
 Registry.getInstance().provide("signup", signup);
 Registry.getInstance().provide("getAccount", getAccount);
 new AccountController();
-httpServer.listen(3001);
+httpServer.listen(3000);

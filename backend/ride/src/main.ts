@@ -23,7 +23,7 @@ import RideController from "./infra/controller/RideController";
   //  await queue.connection()
   //  await queue.setup("rideCompleted", "rideCompleted")
 
-  new RideController(httpServer, requestRide, getRide,)
+  new RideController(httpServer, requestRide, getRide)
 
   httpServer.listen(3001);
 })()
