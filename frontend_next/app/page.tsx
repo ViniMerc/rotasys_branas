@@ -14,7 +14,7 @@ function App() {
 	return (
 		<div>
 			{ !wizard.successMessage && <div>
-				<div>Passo { wizard.step }</div>
+				<div data-testid="custom-element" >Passo { wizard.step }</div>
 				<br/>
 				<div>Progresso { wizard.calculateProgress() }%</div>
 				<br/>
@@ -22,7 +22,7 @@ function App() {
 				<br/>
 				{ (wizard.step === 1) && 
 					<div>
-						<input type="checkbox" onChange={() => reload(() => wizard.isPassenger = !wizard.isPassenger)}/> Passageiro
+						<input  type="checkbox" onChange={() => reload(() => wizard.isPassenger = !wizard.isPassenger)}/> Passageiro
 					</div>
 				}
 				{ (wizard.step === 2) && 
