@@ -8,10 +8,12 @@ export default class ProcessPayment implements UseCase {
    
     }
 
-    async execute(input: Input): Promise<void> {
+    async execute(input: Input): Promise<Output> {
         const payment = Payment.create(input.rideId, input.amount, input.date, input.status)
         await this.paymentRepository.savePayment(payment)
-    
+        return {
+            transactionId: payment.transactionId
+        }
     }
 
 }
@@ -22,3 +24,8 @@ type Input = {
     date: Date,
     status: string,
 }
+
+type Output = {
+	transactionId: string
+}
+
