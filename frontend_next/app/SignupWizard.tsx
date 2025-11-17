@@ -12,7 +12,7 @@ export default class SignupWizard {
 	successMessage = "";
 	accountId = "";
 
-	validate () {
+	validate() {
 		this.errorMessage = "";
 		if (this.step === 1 && !this.isPassenger) {
 			this.errorMessage = "Selecione o tipo de conta";
@@ -45,16 +45,16 @@ export default class SignupWizard {
 		return true;
 	}
 
-	next () {
+	next() {
 		if (!this.validate()) return;
 		this.step++;
 	}
 
-	back () {
+	back() {
 		this.step--;
 	}
 
-	calculateProgress () {
+	calculateProgress() {
 		let progress = 0;
 		if (this.isPassenger) progress += 30;
 		if (this.name) progress += 15;
@@ -64,22 +64,23 @@ export default class SignupWizard {
 		return progress;
 	}
 
-	async confirm () {
+	async confirm() {
 		if (!this.validate()) return;
-		const input = { 
+		const input = {
 			name: this.name,
 			email: this.email,
 			cpf: this.cpf,
 			isPassenger: this.isPassenger
 		}
-		 const response = await axios.post("http://localhost:3000/signup", input);
-		 const output = response.data;
+		const response = await axios.post("http://localhost:3000/signup", input);
+		console.log(response)
+		const output = response.data;
 		this.successMessage = "Conta criada com sucesso!";
-		 this.accountId = output.accountId;
+		this.accountId = output.accountId;
 		this.accountId = "123";
 	}
 
-	populate () {
+	populate() {
 		this.isPassenger = true;
 		this.name = "John Doe";
 		this.email = `john.doe${Math.random()}@gmail.com`;
