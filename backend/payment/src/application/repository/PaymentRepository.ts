@@ -1,6 +1,6 @@
 import Payment from "../../domain/entity/Payment";
  
-export default interface RideRepository {
+export default interface PaymentRepository {
 	savePayment (payment: Payment): Promise<void>;
  
 }
