@@ -54,6 +54,19 @@ export default class SignupWizard {
 		this.step--;
 	}
 
+	restart() {
+		this.step = 1;
+		this.successMessage = ""
+		this.isPassenger = false;
+		this.name = "";
+		this.email = "";
+		this.cpf = "";
+		this.password = "";
+		this.confirmPassword = "";
+		this.errorMessage = "";
+		this.accountId = "";
+	}
+
 	calculateProgress() {
 		let progress = 0;
 		if (this.isPassenger) progress += 30;
@@ -64,6 +77,11 @@ export default class SignupWizard {
 		return progress;
 	}
 
+	sendMessage() {
+
+		this.successMessage = "Conta criada com sucesso!";
+	}
+
 	async confirm() {
 		if (!this.validate()) return;
 		const input = {
@@ -72,13 +90,14 @@ export default class SignupWizard {
 			cpf: this.cpf,
 			isPassenger: this.isPassenger
 		}
+
 		const response = await axios.post("http://localhost:3001/signup", input);
-		console.log(response)
+
 		const output = response.data;
-		this.successMessage = "Conta criada com sucesso!";
+
 		this.accountId = output.accountId;
-		this.accountId = "123";
 	}
+
 
 	populate() {
 		this.isPassenger = true;
