@@ -10,8 +10,11 @@ export default class Login implements UseCase {
 
   async execute(input: Input): Promise<Output> {
     const account = await this.accountRepository.getAccountByEmail(input.email);
-	console.log(account)
     if (!account) throw new Error("Account not found");
+
+    if (account.getPassword() !== input.password)
+      throw new Error("Incorrect Password");
+
     return {
       accountId: account.accountId,
       name: account.getName(),

@@ -8,9 +8,12 @@ function RidePage() {
   const [ride, setRide] = useState(new RideRequest());
   const router = useRouter();
 
-  function reload(fn: any) {
-    if (fn) fn();
-    setRide(clone(ride));
+  async function reload(fn: any) {
+    if (fn) {
+      await fn();
+    }
+    const cloneData = clone(ride);
+    setRide(cloneData);
   }
 
   return (
@@ -26,38 +29,43 @@ function RidePage() {
       <div>
         <div>Progresso {0}%</div>
         <br />
+        {!ride.accountId && (
+          <>
+            <div>
+              <label>Email</label>
+              <input
+                type="text"
+                title="Email"
+                value={ride.email}
+                onChange={(e) => {
+                  reload(() => (ride.email = e.target.value));
+                }}
+              />
+            </div>
+            <div>
+              <label>Senha</label>
+              <input
+                type="text"
+                title="Password"
+                value={ride.password}
+                onChange={(e) => {
+                  reload(() => (ride.password = e.target.value));
+                }}
+              />
+            </div>
+            <button
+              onClick={() =>
+                reload(() => {
+                  ride.login();
+                  ride.updateId();
+                })
+              }
+            >
+              Login
+            </button>
+          </>
+        )}
 
-        <div>
-          <label>Email</label>
-          <input
-            type="text"
-            title="Email"
-            value={ride.email}
-            onChange={(e) => {
-              reload(() => (ride.email = e.target.value));
-            }}
-          />
-        </div>
-        <div>
-          <label>Senha</label>
-          <input
-            type="text"
-            title="Password"
-            value={ride.password}
-            onChange={(e) => {
-              reload(() => (ride.password = e.target.value));
-            }}
-          />
-        </div>
-        <button
-          onClick={() =>
-            reload(() => {
-              ride.login();
-            })
-          }
-        >
-          Login
-        </button>
         {ride.accountId && (
           <>
             <div>
@@ -78,8 +86,16 @@ function RidePage() {
                 <input title="Confirmar" />
               </div>
             </div>
-            <button>Próximo</button>
-            <button>Confirmar</button>
+
+            <button
+              onClick={() =>
+                reload(() => {
+                  ride.requestRide();
+                })
+              }
+            >
+              Solicitar Corrida
+            </button>
           </>
         )}
       </div>
