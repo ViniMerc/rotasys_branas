@@ -34,6 +34,8 @@ export default class RideRequest {
       toLong: this.toLong || -48.522234807851476,
     };
 
-    const response = await axios.post("http://localhost:3000/request_ride", input);
+	const hasActiveRide = await axios.post("http://localhost:3000/request_ride", input);
+
+    const newRide = await axios.post("http://localhost:3000/request_ride", input);
   }
 }

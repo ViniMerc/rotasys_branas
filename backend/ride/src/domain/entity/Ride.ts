@@ -9,18 +9,18 @@ export default class Ride {
 	private from: Coord;
 	private to: Coord;
 
-	constructor(readonly rideId: string, readonly passengerId: string, public driverId: string, fromLat: number, fromLong: number, toLat: number, toLong: number, public status: string, readonly date: Date, public distance: number, public fare: number) {
+	constructor(readonly rideId: string, readonly accountId: string, public driverId: string, fromLat: number, fromLong: number, toLat: number, toLong: number, public status: string, readonly date: Date, public distance: number, public fare: number) {
 		this.from = new Coord(fromLat, fromLong);
 		this.to = new Coord(toLat, toLong);
 	}
 
-	static create(passengerId: string, fromLat: number, fromLong: number, toLat: number, toLong: number) {
+	static create(accountId: string, fromLat: number, fromLong: number, toLat: number, toLong: number) {
 		const rideId = crypto.randomUUID();
 		const status = "requested";
 		const date = new Date();
 		const distance = 0;
 		const fare = 0;
-		return new Ride(rideId, passengerId, "", fromLat, fromLong, toLat, toLong, status, date, distance, fare);
+		return new Ride(rideId, accountId, "", fromLat, fromLong, toLat, toLong, status, date, distance, fare);
 	}
 
 	getFrom() {

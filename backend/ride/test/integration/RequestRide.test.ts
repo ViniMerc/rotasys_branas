@@ -33,7 +33,7 @@ test("Deve solicitar uma corrida", async function () {
 	}
 	const outputSignup = await accountGateway.signup(inputSignup);
 	const inputRequestRide = {
-		passengerId: outputSignup.accountId,
+		accountId: outputSignup.accountId,
 		fromLat: -27.584905257808835,
 		fromLong: -48.545022195325124,
 		toLat: -27.496887588317275,
@@ -43,7 +43,7 @@ test("Deve solicitar uma corrida", async function () {
 	expect(outputRequestRide.rideId).toBeDefined();
 	const outputGetRide = await getRide.execute(outputRequestRide.rideId);
 	expect(outputGetRide.rideId).toBe(outputRequestRide.rideId);
-	expect(outputGetRide.passengerId).toBe(inputRequestRide.passengerId);
+	expect(outputGetRide.accountId).toBe(inputRequestRide.accountId);
 	expect(outputGetRide.passengerName).toBe("John Doe");
 	expect(outputGetRide.fromLat).toBe(inputRequestRide.fromLat);
 	expect(outputGetRide.fromLong).toBe(inputRequestRide.fromLong);
@@ -63,7 +63,7 @@ test("Não deve poder solicitar uma corrida se a conta não for de um passageiro
 	}
 	const outputSignup = await accountGateway.signup(inputSignup);
 	const inputRequestRide = {
-		passengerId: outputSignup.accountId,
+		accountId: outputSignup.accountId,
 		fromLat: -27.584905257808835,
 		fromLong: -48.545022195325124,
 		toLat: -27.496887588317275,
@@ -81,7 +81,7 @@ test("Não deve poder solicitar uma corrida se o passageiro já tiver outra corr
 	}
 	const outputSignup = await accountGateway.signup(inputSignup);
 	const inputRequestRide = {
-		passengerId: outputSignup.accountId,
+		accountId: outputSignup.accountId,
 		fromLat: -27.584905257808835,
 		fromLong: -48.545022195325124,
 		toLat: -27.496887588317275,

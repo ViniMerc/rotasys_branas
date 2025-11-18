@@ -13,12 +13,12 @@ export default class GetRide implements UseCase {
 
 	async execute(rideId: string): Promise<Output> {
 		const ride = await this.rideRepository.getRideById(rideId);
-		const passenger = await this.accountRepository.getAccountById(ride.passengerId);
+		const passenger = await this.accountRepository.getAccountById(ride.accountId);
 		const lastPosition = await this.positionRepository.getLastPositionFromRideId(rideId);
 		console.log(passenger)
 		return {
 			rideId: ride.rideId,
-			passengerId: ride.passengerId,
+			accountId: ride.accountId,
 			driverId: ride.driverId,
 			passengerName: passenger.name,
 			fromLat: ride.getFrom().getLat(),
@@ -38,7 +38,7 @@ export default class GetRide implements UseCase {
 
 type Output = {
 	rideId: string,
-	passengerId: string,
+	accountId: string,
 	driverId: string,
 	passengerName: string,
 	fromLat: number,

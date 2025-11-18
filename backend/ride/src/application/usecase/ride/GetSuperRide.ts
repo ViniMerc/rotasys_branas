@@ -12,7 +12,7 @@ export default class GetSuperRide implements UseCase {
 		const ride = await this.rideRepository.getRideById(rideId);
 		return {
 			rideId: ride.rideId,
-			passengerId: ride.passenger.accountId,
+			accountId: ride.passenger.accountId,
 			fromLat: ride.getFrom().getLat(),
 			fromLong: ride.getFrom().getLong(),
 			toLat: ride.getTo().getLat(),
@@ -27,7 +27,7 @@ export default class GetSuperRide implements UseCase {
 
 type Output = {
 	rideId: string,
-	passengerId: string,
+	accountId: string,
 	fromLat: number,
 	fromLong: number,
 	toLat: number,

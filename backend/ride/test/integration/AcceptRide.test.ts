@@ -34,7 +34,7 @@ test("Deve aceitar uma corrida", async function () {
 	}
 	const outputSignupPassenger = await accountGateway.signup(inputSignupPassenger);
 	const inputRequestRide = {
-		passengerId: outputSignupPassenger.accountId,
+		accountId: outputSignupPassenger.accountId,
 		fromLat: -27.584905257808835,
 		fromLong: -48.545022195325124,
 		toLat: -27.496887588317275,
@@ -68,7 +68,7 @@ test("Não deve aceitar uma corrida se o motorista já tiver outra corrida", asy
 	}
 	const outputSignupPassenger = await accountGateway.signup(inputSignupPassenger);
 	const inputRequestRide = {
-		passengerId: outputSignupPassenger.accountId,
+		accountId: outputSignupPassenger.accountId,
 		fromLat: -27.584905257808835,
 		fromLong: -48.545022195325124,
 		toLat: -27.496887588317275,
