@@ -72,7 +72,7 @@ export default class SignupWizard {
 			cpf: this.cpf,
 			isPassenger: this.isPassenger
 		}
-		const response = await axios.post("http://localhost:3000/signup", input);
+		const response = await axios.post("http://localhost:3001/signup", input);
 		console.log(response)
 		const output = response.data;
 		this.successMessage = "Conta criada com sucesso!";

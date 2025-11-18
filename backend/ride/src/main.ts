@@ -25,5 +25,5 @@ import RideController from "./infra/controller/RideController";
 
   new RideController(httpServer, requestRide, getRide)
 
-  httpServer.listen(3001);
+  httpServer.listen(3000);
 })()
