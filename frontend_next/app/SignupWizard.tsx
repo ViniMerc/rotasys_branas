@@ -3,6 +3,8 @@ import axios from "axios";
 export default class SignupWizard {
 	step = 1;
 	isPassenger = false;
+	isDriver = false;
+	carPlate = "";
 	name = "";
 	email = "";
 	cpf = "";
@@ -14,8 +16,12 @@ export default class SignupWizard {
 
 	validate() {
 		this.errorMessage = "";
-		if (this.step === 1 && !this.isPassenger) {
+		if (this.step === 1 && !this.isPassenger && !this.isDriver) {
 			this.errorMessage = "Selecione o tipo de conta";
+			return false;
+		}
+		if (this.step === 1 && this.isDriver && !this.carPlate) {
+			this.errorMessage = "Adicione a placa do carro ";
 			return false;
 		}
 		if (this.step === 2 && !this.name) {
@@ -65,6 +71,8 @@ export default class SignupWizard {
 		this.confirmPassword = "";
 		this.errorMessage = "";
 		this.accountId = "";
+		this.carPlate = "";
+		this.isDriver = false
 	}
 
 	calculateProgress() {

@@ -25,9 +25,36 @@ function App() {
 				<div>{wizard.errorMessage}</div>
 				<br />
 				{(wizard.step === 1) &&
+
 					<div>
-						<input title="check" type="checkbox" onChange={() => reload(() => wizard.isPassenger = !wizard.isPassenger)} /> Passageiro
+						<fieldset >
+
+							<div>
+								<input title="check" type="radio" checked={wizard.isPassenger} onChange={() => reload(() => {
+									wizard.isPassenger = !wizard.isPassenger
+									wizard.isDriver = false
+								})} />
+								<label  >Passageiro</label>
+							</div>
+
+							<div>
+								<input type="radio" checked={wizard.isDriver} onChange={() => reload(() => {
+									wizard.isDriver = !wizard.isDriver
+									wizard.isPassenger = false
+								})} />
+								<label  >Motorista</label>
+							</div>
+
+
+						</fieldset>
+						{wizard.isDriver && (<div>
+							<input title="check" type="text" onChange={(e) => reload(() => wizard.carPlate = e.target.value)} /> Placa do carro
+						</div>)}
+
+
 					</div>
+
+
 				}
 				{(wizard.step === 2) &&
 					<div>
