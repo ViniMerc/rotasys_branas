@@ -78,6 +78,8 @@ export default class SignupWizard {
 	calculateProgress() {
 		let progress = 0;
 		if (this.isPassenger) progress += 30;
+		if (this.isDriver) progress += 15;
+		if (this.carPlate) progress += 15
 		if (this.name) progress += 15;
 		if (this.email) progress += 15;
 		if (this.cpf) progress += 15;

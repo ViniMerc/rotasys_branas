@@ -1,7 +1,8 @@
 "use client"
 
 import { useState } from "react";
-import SignupWizard from "./SignupWizard";
+import SignupWizard from "../app/SignupWizard";
+import { useRouter } from "next/router";
 
 function App() {
 	const [wizard, setWizard] = useState(new SignupWizard());
@@ -10,7 +11,7 @@ function App() {
 		if (fn) fn();
 		setWizard(clone(wizard));
 	}
-
+	const router = useRouter()
 
 
 
@@ -18,7 +19,9 @@ function App() {
 	return (
 		<div>
 			<div>
-
+				<button onClick={() => {
+					router.push("/")
+				}}>Menu</button>
 				<button onClick={() => reload(() => {
 					wizard.populateDriver()
 				})}>Motorista Padrão</button>
@@ -43,6 +46,7 @@ function App() {
 								<input title="passengerOption" type="radio" checked={wizard.isPassenger} onChange={() => reload(() => {
 									wizard.isPassenger = !wizard.isPassenger
 									wizard.isDriver = false
+									wizard.carPlate = ""
 								})} />
 								<label  >Passageiro</label>
 							</div>
@@ -105,11 +109,13 @@ function App() {
 			{wizard.successMessage && <div>
 				<div>
 					{wizard.successMessage}
-					<button onClick={() => reload(() => {
-						wizard.restart()
+					<div>
+						<button onClick={() => reload(() => {
+							wizard.restart()
 
 
-					})}>Recomeçar</button>
+						})}>Recomeçar</button>
+					</div>
 				</div>
 			</div>}
 		</div>

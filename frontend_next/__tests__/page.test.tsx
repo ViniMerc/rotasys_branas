@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom'
 import { fireEvent, render, screen } from '@testing-library/react'
-import Page from '../app/page'
+import Page from '../pages/account'
 import { act } from 'react'
 
 
