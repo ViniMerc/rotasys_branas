@@ -70,16 +70,34 @@ function RidePage() {
           <>
             <div>
               <label>From Lat </label>
-              <input type="text" title="Cpf" value={-27.584905257808835} />{" "}
+              <input
+                type="text"
+                title="Cpf"
+                onChange={() => {}}
+                value={-27.584905257808835}
+              />{" "}
               <label>From Long</label>
-              <input type="text" title="Cpf" value={-48.545022195325124} />
+              <input
+                type="text"
+                title="Cpf"
+                onChange={() => {}}
+                value={-48.545022195325124}
+              />
             </div>
             <div>
               <div>
                 <label>To Lat</label>
-                <input title="Senha" value={-27.496887588317275} />
+                <input
+                  title="Senha"
+                  onChange={() => {}}
+                  value={-27.496887588317275}
+                />
                 <label>To Long</label>
-                <input title="Senha" value={-48.522234807851476} />
+                <input
+                  title="Senha"
+                  onChange={() => {}}
+                  value={-48.522234807851476}
+                />
               </div>
               <div>
                 <label>Motorista</label>

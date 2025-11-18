@@ -6,17 +6,21 @@ import { ExpressAdapter, HapiAdapter } from "./infra/http/HttpServer";
 import AccountController from "./infra/controller/AccountController";
 import Registry from "./infra/di/Registry";
 import Login from "./application/usecase/account/Login";
+import GetAllAccounts from "./application/usecase/account/GetAllAccounts";
 
 const connection = new PgPromiseAdapter();
 const accountRepository = new AccountRepositoryDatabase(connection);
 const signup = new Signup(accountRepository);
 const getAccount = new GetAccount(accountRepository);
 const login = new Login(accountRepository)
+const getAllAccounts = new GetAllAccounts(accountRepository)
 const httpServer = new ExpressAdapter()
 Registry.getInstance().provide("httpServer", httpServer);
 Registry.getInstance().provide("signup", signup);
 Registry.getInstance().provide("getAccount", getAccount);
 Registry.getInstance().provide("login", login);
+Registry.getInstance().provide("getAllAccounts", getAllAccounts);
+
 
 new AccountController();
 httpServer.listen(3001);

@@ -3,6 +3,7 @@ import GetAccount from "../../application/usecase/account/GetAccount";
 import HttpServer from "../http/HttpServer";
 import Registry, { inject } from "../di/Registry";
 import Login from "../../application/usecase/account/Login";
+import GetAllAccounts from "../../application/usecase/account/GetAllAccounts";
 
 export default class AccountController {
   @inject("httpServer")
@@ -13,6 +14,9 @@ export default class AccountController {
   login!: Login;
   @inject("getAccount")
   getAccount!: GetAccount;
+  @inject("getAllAccounts")
+  getAllAccounts!: GetAllAccounts;
+
 
   constructor() {
     this.httpServer.register(
@@ -41,6 +45,15 @@ export default class AccountController {
       async (params: any, body: any) => {
         const accountId = params.accountId;
         const output = await this.getAccount.execute(accountId);
+        return output;
+      }
+    );
+
+     this.httpServer?.register(
+      "get",
+      "/accounts",
+      async (params: any, body: any) => {
+         const output = await this.getAllAccounts.execute();
         return output;
       }
     );
