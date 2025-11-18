@@ -1,133 +1,214 @@
-"use client"
+"use client";
 
 import { useState } from "react";
 import SignupWizard from "../app/SignupWizard";
 import { useRouter } from "next/router";
 
 function App() {
-	const [wizard, setWizard] = useState(new SignupWizard());
+  const [wizard, setWizard] = useState(new SignupWizard());
 
-	function reload(fn: any) {
-		if (fn) fn();
-		setWizard(clone(wizard));
-	}
-	const router = useRouter()
+  function reload(fn: any) {
+    if (fn) fn();
+    setWizard(clone(wizard));
+  }
+  const router = useRouter();
 
+  return (
+    <div>
+      <div>
+        <button
+          onClick={() => {
+            router.push("/");
+          }}
+        >
+          Menu
+        </button>
+        <button
+          onClick={() =>
+            reload(() => {
+              wizard.populateDriver();
+            })
+          }
+        >
+          Motorista Padrão
+        </button>
 
+        <button
+          onClick={() =>
+            reload(() => {
+              wizard.populatePassenger();
+            })
+          }
+        >
+          Passageiro Padrão
+        </button>
+      </div>
+      {!wizard.successMessage && (
+        <div>
+          <div>Passo {wizard.step}</div>
+          <br />
+          <div>Progresso {wizard.calculateProgress()}%</div>
+          <br />
+          <div>{wizard.errorMessage}</div>
+          <br />
+          {wizard.step === 1 && (
+            <div>
+              <fieldset>
+                <div>
+                  <input
+                    title="passengerOption"
+                    type="radio"
+                    checked={wizard.isPassenger}
+                    onChange={() =>
+                      reload(() => {
+                        wizard.isPassenger = !wizard.isPassenger;
+                        wizard.isDriver = false;
+                        wizard.carPlate = "";
+                      })
+                    }
+                  />
+                  <label>Passageiro</label>
+                </div>
 
-
-	return (
-		<div>
-			<div>
-				<button onClick={() => {
-					router.push("/")
-				}}>Menu</button>
-				<button onClick={() => reload(() => {
-					wizard.populateDriver()
-				})}>Motorista Padrão</button>
-
-				<button onClick={() => reload(() => {
-					wizard.populatePassenger()
-				})}>Passageiro Padrão</button>
-			</div>
-			{!wizard.successMessage && <div>
-				<div >Passo {wizard.step}</div>
-				<br />
-				<div>Progresso {wizard.calculateProgress()}%</div>
-				<br />
-				<div>{wizard.errorMessage}</div>
-				<br />
-				{(wizard.step === 1) &&
-
-					<div>
-						<fieldset >
-
-							<div>
-								<input title="passengerOption" type="radio" checked={wizard.isPassenger} onChange={() => reload(() => {
-									wizard.isPassenger = !wizard.isPassenger
-									wizard.isDriver = false
-									wizard.carPlate = ""
-								})} />
-								<label  >Passageiro</label>
-							</div>
-
-							<div>
-								<input title="driverOption" type="radio" checked={wizard.isDriver} onChange={() => reload(() => {
-									wizard.isDriver = !wizard.isDriver
-									wizard.isPassenger = false
-								})} />
-								<label  >Motorista</label>
-							</div>
-
-
-						</fieldset>
-						{wizard.isDriver && (<div>
-							<input title="carPlate" value={wizard.carPlate} type="text" onChange={(e) => reload(() => wizard.carPlate = e.target.value)} /> Placa do carro
-						</div>)}
-
-
-					</div>
-
-
-				}
-				{(wizard.step === 2) &&
-					<div>
-						<div>
-							<label>Name</label>
-							<input type="text" title="Nome" value={wizard.name} onChange={(e) => reload(() => wizard.name = e.target.value)} />
-						</div>
-						<div>
-							<label>Email</label>
-							<input type="text" title="Email" value={wizard.email} onChange={(e) => reload(() => wizard.email = e.target.value)} />
-						</div>
-						<div>
-							<label>Cpf</label>
-							<input type="text" title="Cpf" value={wizard.cpf} onChange={(e) => reload(() => wizard.cpf = e.target.value)} />
-						</div>
-					</div>
-				}
-				{(wizard.step === 3) &&
-					<div>
-						<div>
-							<label>Senha</label>
-							<input title="Senha" type="password" value={wizard.password} onChange={(e) => reload(() => wizard.password = e.target.value)} />
-						</div>
-						<div>
-							<label>Confirmação de senha</label>
-							<input title="Confirmar" type="password" value={wizard.confirmPassword} onChange={(e) => reload(() => wizard.confirmPassword = e.target.value)} />
-						</div>
-					</div>
-				}
-				{wizard.step !== 1 && <button onClick={() => reload(() => wizard.back())}>Anterior</button>}
-				{wizard.step !== 3 && <button onClick={() => reload(() => wizard.next())}>Próximo</button>}
-				{wizard.step === 3 && <button onClick={() => reload(() => {
-					wizard.confirm()
-					wizard.sendMessage()
-
-				})}>Confirmar</button>}
-			</div>}
-			{wizard.successMessage && <div>
-				<div>
-					{wizard.successMessage}
-					<div>
-						<button onClick={() => reload(() => {
-							wizard.restart()
-
-
-						})}>Recomeçar</button>
-					</div>
-				</div>
-			</div>}
-		</div>
-	)
+                <div>
+                  <input
+                    title="driverOption"
+                    type="radio"
+                    checked={wizard.isDriver}
+                    onChange={() =>
+                      reload(() => {
+                        wizard.isDriver = !wizard.isDriver;
+                        wizard.isPassenger = false;
+                      })
+                    }
+                  />
+                  <label>Motorista</label>
+                </div>
+              </fieldset>
+              {wizard.isDriver && (
+                <div>
+                  <input
+                    title="carPlate"
+                    value={wizard.carPlate}
+                    type="text"
+                    onChange={(e) =>
+                      reload(() => (wizard.carPlate = e.target.value))
+                    }
+                  />{" "}
+                  Placa do carro
+                </div>
+              )}
+            </div>
+          )}
+          {wizard.step === 2 && (
+            <div>
+              <div>
+                <label>Name</label>
+                <input
+                  type="text"
+                  title="Nome"
+                  value={wizard.name}
+                  onChange={(e) => reload(() => (wizard.name = e.target.value))}
+                />
+              </div>
+              <div>
+                <label>Email</label>
+                <input
+                  type="text"
+                  title="Email"
+                  value={wizard.email}
+                  onChange={(e) =>
+                    reload(() => (wizard.email = e.target.value))
+                  }
+                />
+              </div>
+              <div>
+                <label>Cpf</label>
+                <input
+                  type="text"
+                  title="Cpf"
+                  value={wizard.cpf}
+                  onChange={(e) => reload(() => (wizard.cpf = e.target.value))}
+                />
+              </div>
+            </div>
+          )}
+          {wizard.step === 3 && (
+            <div>
+              <div>
+                <label>Senha</label>
+                <input
+                  title="Senha"
+                  type="password"
+                  value={wizard.password}
+                  onChange={(e) =>
+                    reload(() => (wizard.password = e.target.value))
+                  }
+                />
+              </div>
+              <div>
+                <label>Confirmação de senha</label>
+                <input
+                  title="Confirmar"
+                  type="password"
+                  value={wizard.confirmPassword}
+                  onChange={(e) =>
+                    reload(() => (wizard.confirmPassword = e.target.value))
+                  }
+                />
+              </div>
+            </div>
+          )}
+          {wizard.step !== 1 && (
+            <button onClick={() => reload(() => wizard.back())}>
+              Anterior
+            </button>
+          )}
+          {wizard.step !== 3 && (
+            <button onClick={() => reload(() => wizard.next())}>Próximo</button>
+          )}
+          {wizard.step === 3 && (
+            <button
+              onClick={() =>
+                reload(() => {
+                  wizard.confirm();
+                  wizard.sendMessage();
+                })
+              }
+            >
+              Confirmar
+            </button>
+          )}
+        </div>
+      )}
+      {wizard.successMessage && (
+        <div>
+          <div>
+            {wizard.successMessage}
+            <div>
+              <button
+                onClick={() =>
+                  reload(() => {
+                    wizard.restart();
+                  })
+                }
+              >
+                Recomeçar
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
 }
 
 function clone(obj: any) {
-	var copy = new obj.constructor;
-	for (var attr in obj) {
-		if (obj.hasOwnProperty(attr)) copy[attr] = obj[attr];
-	}
-	return copy;
+  var copy = new obj.constructor();
+  for (var attr in obj) {
+    if (obj.hasOwnProperty(attr)) copy[attr] = obj[attr];
+  }
+  return copy;
 }
 
-export default App
+export default App;

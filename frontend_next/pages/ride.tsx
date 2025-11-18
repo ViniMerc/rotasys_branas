@@ -1,25 +1,11 @@
-"use client"
-
-
+"use client";
 
 function App() {
-
-
-
-
-
-
-	return (
-
-		<div>
-			<div>
-				RotaSys
-			</div> </div>
-
-
-	)
+  return (
+    <div>
+      <div>RotaSys</div>
+    </div>
+  );
 }
 
-
-
-export default App
+export default App;
