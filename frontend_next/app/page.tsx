@@ -30,7 +30,7 @@ function App() {
 						<fieldset >
 
 							<div>
-								<input title="check" type="radio" checked={wizard.isPassenger} onChange={() => reload(() => {
+								<input title="passengerOption" type="radio" checked={wizard.isPassenger} onChange={() => reload(() => {
 									wizard.isPassenger = !wizard.isPassenger
 									wizard.isDriver = false
 								})} />
@@ -38,7 +38,7 @@ function App() {
 							</div>
 
 							<div>
-								<input type="radio" checked={wizard.isDriver} onChange={() => reload(() => {
+								<input title="driverOption" type="radio" checked={wizard.isDriver} onChange={() => reload(() => {
 									wizard.isDriver = !wizard.isDriver
 									wizard.isPassenger = false
 								})} />
@@ -48,7 +48,7 @@ function App() {
 
 						</fieldset>
 						{wizard.isDriver && (<div>
-							<input title="check" type="text" onChange={(e) => reload(() => wizard.carPlate = e.target.value)} /> Placa do carro
+							<input title="carPlate" type="text" onChange={(e) => reload(() => wizard.carPlate = e.target.value)} /> Placa do carro
 						</div>)}
 
 
