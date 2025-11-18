@@ -4,9 +4,14 @@ import RideRequest from "@/app/components/RideRequest";
 import { useRouter } from "next/router";
 import { useState } from "react";
 
-function App() {
+function RidePage() {
   const [ride, setRide] = useState(new RideRequest());
   const router = useRouter();
+
+  function reload(fn: any) {
+    if (fn) fn();
+    setRide(clone(ride));
+  }
 
   return (
     <div>
@@ -24,13 +29,35 @@ function App() {
 
         <div>
           <label>Email</label>
-          <input type="text" title="Email" value={ride.email} />
+          <input
+            type="text"
+            title="Email"
+            value={ride.email}
+            onChange={(e) => {
+              reload(() => (ride.email = e.target.value));
+            }}
+          />
         </div>
         <div>
           <label>Senha</label>
-          <input type="text" title="Password" value={ride.password} />
+          <input
+            type="text"
+            title="Password"
+            value={ride.password}
+            onChange={(e) => {
+              reload(() => (ride.password = e.target.value));
+            }}
+          />
         </div>
-        <button>Login</button>
+        <button
+          onClick={() =>
+            reload(() => {
+              ride.login();
+            })
+          }
+        >
+          Login
+        </button>
         {ride.accountId && (
           <>
             <div>
@@ -60,4 +87,12 @@ function App() {
   );
 }
 
-export default App;
+function clone(obj: any) {
+  var copy = new obj.constructor();
+  for (var attr in obj) {
+    if (obj.hasOwnProperty(attr)) copy[attr] = obj[attr];
+  }
+  return copy;
+}
+
+export default RidePage;

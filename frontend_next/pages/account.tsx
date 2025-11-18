@@ -4,7 +4,7 @@ import { useState } from "react";
 import SignupWizard from "../app/components/SignupWizard";
 import { useRouter } from "next/router";
 
-function App() {
+function AccountPage() {
   const [wizard, setWizard] = useState(new SignupWizard());
 
   function reload(fn: any) {
@@ -214,4 +214,4 @@ function clone(obj: any) {
   return copy;
 }
 
-export default App;
+export default AccountPage;
