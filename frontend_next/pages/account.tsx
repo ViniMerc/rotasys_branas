@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import SignupWizard from "../app/SignupWizard";
+import SignupWizard from "../app/components/SignupWizard";
 import { useRouter } from "next/router";
 
 function App() {
