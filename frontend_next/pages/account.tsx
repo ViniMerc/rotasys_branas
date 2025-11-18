@@ -16,6 +16,7 @@ function App() {
   return (
     <div>
       <div>
+        RotaSys
         <button
           onClick={() => {
             router.push("/");
@@ -23,6 +24,8 @@ function App() {
         >
           Menu
         </button>
+      </div>
+      <div>
         <button
           onClick={() =>
             reload(() => {

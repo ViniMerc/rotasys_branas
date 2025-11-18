@@ -1,60 +1,26 @@
 import axios from "axios";
 
-export default class SignupWizard {
+export default class RideRequest {
+	email = "";
+	password = "";
+	accountId = "";
+
 	step = 1;
 	isPassenger = false;
 	isDriver = false;
 	carPlate = "";
 	name = "";
-	email = "";
 	cpf = "";
-	password = "";
 	confirmPassword = "";
 	errorMessage = "";
 	successMessage = "";
-	accountId = "";
 
-	validate() {
-		this.errorMessage = "";
-		if (this.step === 1 && !this.isPassenger && !this.isDriver) {
-			this.errorMessage = "Selecione o tipo de conta";
-			return false;
-		}
-		if (this.step === 1 && this.isDriver && !this.carPlate) {
-			this.errorMessage = "Adicione a placa do carro ";
-			return false;
-		}
-		if (this.step === 2 && !this.name) {
-			this.errorMessage = "Digite o nome";
-			return false;
-		}
-		if (this.step === 2 && !this.email) {
-			this.errorMessage = "Digite o email";
-			return false;
-		}
-		if (this.step === 2 && !this.cpf) {
-			this.errorMessage = "Digite o cpf";
-			return false;
-		}
-		if (this.step === 3 && !this.password) {
-			this.errorMessage = "Digite a senha";
-			return false;
-		}
-		if (this.step === 3 && !this.confirmPassword) {
-			this.errorMessage = "Digite a confirmação da senha";
-			return false;
-		}
-		if (this.step === 3 && this.password && this.confirmPassword && (this.password !== this.confirmPassword)) {
-			this.errorMessage = "A senha e a confirmação da senha devem ser iguais";
-			return false;
-		}
-		return true;
-	}
+	 login () {
+		if (!this.email || !this.password) return
+		
+	 }
 
-	next() {
-		if (!this.validate()) return;
-		this.step++;
-	}
+	 
 
 	back() {
 		this.step--;
@@ -93,7 +59,7 @@ export default class SignupWizard {
 	}
 
 	async confirm() {
-		if (!this.validate()) return;
+		 
 		const input = {
 			name: this.name,
 			email: this.email,
