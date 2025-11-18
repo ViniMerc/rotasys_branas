@@ -96,7 +96,9 @@ export default class SignupWizard {
 			name: this.name,
 			email: this.email,
 			cpf: this.cpf,
-			isPassenger: this.isPassenger
+			isPassenger: this.isPassenger,
+			isDriver: this.isDriver,
+			carPlate: this.carPlate,
 		}
 
 		const response = await axios.post("http://localhost:3001/signup", input);
@@ -107,12 +109,26 @@ export default class SignupWizard {
 	}
 
 
-	populate() {
-		this.isPassenger = true;
-		this.name = "John Doe";
+	populateDriver() {
+		this.isPassenger = false;
+		this.name = "John Driver";
 		this.email = `john.doe${Math.random()}@gmail.com`;
 		this.cpf = "97456321558";
 		this.password = "123456";
 		this.confirmPassword = "123456";
+		this.isDriver = true;
+		this.carPlate = "AAA9999"
 	}
+
+		populatePassenger() {
+		this.isPassenger = true;
+		this.name = "Passenger Doe";
+		this.email = `john.doe${Math.random()}@gmail.com`;
+		this.cpf = "97456321558";
+		this.password = "123456";
+		this.confirmPassword = "123456";
+		this.isDriver = false;
+		this.carPlate = ""
+	}
+
 }

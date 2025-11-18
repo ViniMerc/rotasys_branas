@@ -17,6 +17,16 @@ function App() {
 
 	return (
 		<div>
+			<div>
+
+				<button onClick={() => reload(() => {
+					wizard.populateDriver()
+				})}>Motorista Padrão</button>
+
+				<button onClick={() => reload(() => {
+					wizard.populatePassenger()
+				})}>Passageiro Padrão</button>
+			</div>
 			{!wizard.successMessage && <div>
 				<div >Passo {wizard.step}</div>
 				<br />
@@ -48,7 +58,7 @@ function App() {
 
 						</fieldset>
 						{wizard.isDriver && (<div>
-							<input title="carPlate" type="text" onChange={(e) => reload(() => wizard.carPlate = e.target.value)} /> Placa do carro
+							<input title="carPlate" value={wizard.carPlate} type="text" onChange={(e) => reload(() => wizard.carPlate = e.target.value)} /> Placa do carro
 						</div>)}
 
 
