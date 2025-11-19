@@ -55,7 +55,7 @@ export default class RideRequest {
     );
 
     setTimeout(() => {
-      this.driverId = listOfDrivers[0];
+      this.driverId = listOfDrivers[0].accountId;
     }, 4000);
 
     this.status = "accepted";

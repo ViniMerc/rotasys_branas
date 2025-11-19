@@ -101,7 +101,11 @@ function RidePage() {
               </div>
               <div>
                 <label>Motorista</label>
-                <input title="Confirmar" />
+                <input
+                  title="Confirmar"
+                  onChange={() => {}}
+                  value={ride.driverId}
+                />
               </div>
             </div>
 
