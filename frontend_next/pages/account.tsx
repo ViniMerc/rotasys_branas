@@ -83,7 +83,11 @@ function AccountPage() {
                   value={wizard.calculateProgress()}
                   sx={{ height: 8, borderRadius: 4 }}
                 />
-                <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
+                <Typography
+                  variant="body2"
+                  color="text.secondary"
+                  sx={{ mt: 1 }}
+                >
                   {wizard.calculateProgress()}%
                 </Typography>
               </Box>
@@ -97,7 +101,10 @@ function AccountPage() {
               {wizard.step === 1 && (
                 <Box>
                   <FormControl component="fieldset" fullWidth>
-                    <FormLabel component="legend" sx={{ mb: 2, fontSize: "1.1rem" }}>
+                    <FormLabel
+                      component="legend"
+                      sx={{ mb: 2, fontSize: "1.1rem" }}
+                    >
                       Selecione o tipo de conta
                     </FormLabel>
                     <RadioGroup
@@ -135,7 +142,9 @@ function AccountPage() {
                       label="Placa do carro"
                       value={wizard.carPlate}
                       onChange={(e) =>
-                        reload(() => (wizard.carPlate = e.target.value))
+                        reload(() => {
+                          wizard.carPlate = e.target.value;
+                        })
                       }
                       sx={{ mt: 3 }}
                       inputProps={{ title: "carPlate" }}
@@ -173,7 +182,11 @@ function AccountPage() {
                     fullWidth
                     label="Nome"
                     value={wizard.name}
-                    onChange={(e) => reload(() => (wizard.name = e.target.value))}
+                    onChange={(e) =>
+                      reload(() => {
+                        wizard.name = e.target.value;
+                      })
+                    }
                     inputProps={{ title: "Nome" }}
                   />
                   <TextField
@@ -181,14 +194,22 @@ function AccountPage() {
                     label="Email"
                     type="email"
                     value={wizard.email}
-                    onChange={(e) => reload(() => (wizard.email = e.target.value))}
+                    onChange={(e) =>
+                      reload(() => {
+                        wizard.email = e.target.value;
+                      })
+                    }
                     inputProps={{ title: "Email" }}
                   />
                   <TextField
                     fullWidth
                     label="CPF"
                     value={wizard.cpf}
-                    onChange={(e) => reload(() => (wizard.cpf = e.target.value))}
+                    onChange={(e) =>
+                      reload(() => {
+                        wizard.cpf = e.target.value;
+                      })
+                    }
                     inputProps={{ title: "Cpf" }}
                   />
                 </Box>
@@ -202,7 +223,9 @@ function AccountPage() {
                     type="password"
                     value={wizard.password}
                     onChange={(e) =>
-                      reload(() => (wizard.password = e.target.value))
+                      reload(() => {
+                        wizard.password = e.target.value;
+                      })
                     }
                     inputProps={{ title: "Senha" }}
                   />
@@ -212,14 +235,18 @@ function AccountPage() {
                     type="password"
                     value={wizard.confirmPassword}
                     onChange={(e) =>
-                      reload(() => (wizard.confirmPassword = e.target.value))
+                      reload(() => {
+                        wizard.confirmPassword = e.target.value;
+                      })
                     }
                     inputProps={{ title: "Confirmar" }}
                   />
                 </Box>
               )}
 
-              <Box sx={{ display: "flex", justifyContent: "space-between", mt: 4 }}>
+              <Box
+                sx={{ display: "flex", justifyContent: "space-between", mt: 4 }}
+              >
                 <Button
                   variant="outlined"
                   onClick={() => reload(() => wizard.back())}
@@ -255,7 +282,9 @@ function AccountPage() {
         {wizard.successMessage && (
           <Card elevation={3}>
             <CardContent sx={{ p: 4, textAlign: "center" }}>
-              <CheckCircleIcon sx={{ fontSize: 80, color: "success.main", mb: 2 }} />
+              <CheckCircleIcon
+                sx={{ fontSize: 80, color: "success.main", mb: 2 }}
+              />
               <Typography variant="h4" gutterBottom color="success.main">
                 {wizard.successMessage}
               </Typography>
@@ -280,8 +309,8 @@ function AccountPage() {
 }
 
 function clone(obj: any) {
-  var copy = new obj.constructor();
-  for (var attr in obj) {
+  const copy = new obj.constructor();
+  for (const attr in obj) {
     if (obj.hasOwnProperty(attr)) copy[attr] = obj[attr];
   }
   return copy;
