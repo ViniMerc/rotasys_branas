@@ -97,9 +97,9 @@ function RidePage() {
                   size="large"
                   fullWidth
                   startIcon={<LoginIcon />}
-                  onClick={() =>
-                    reload(() => {
-                      ride.login();
+                  onClick={async () =>
+                    reload(async () => {
+                      await ride.login();
                       ride.updateId();
                     })
                   }
@@ -185,9 +185,9 @@ function RidePage() {
                   size="large"
                   fullWidth
                   startIcon={<RideIcon />}
-                  onClick={() =>
-                    reload(() => {
-                      ride.requestRide();
+                  onClick={async () =>
+                    reload(async () => {
+                      await ride.requestRide();
                     })
                   }
                 >

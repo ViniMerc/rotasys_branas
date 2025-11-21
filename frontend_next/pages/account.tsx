@@ -34,8 +34,10 @@ function AccountPage() {
   const [wizard, setWizard] = useState(new SignupWizard());
   const router = useRouter();
 
-  function reload(fn: any) {
-    if (fn) fn();
+  async function reload(fn?: () => void | Promise<void>) {
+    if (fn) {
+      await fn();
+    }
     setWizard(clone(wizard));
   }
 
@@ -236,10 +238,9 @@ function AccountPage() {
                 {wizard.step === 3 && (
                   <Button
                     variant="contained"
-                    onClick={() =>
-                      reload(() => {
-                        wizard.confirm();
-                        wizard.sendMessage();
+                    onClick={async () =>
+                      reload(async () => {
+                        await wizard.confirm();
                       })
                     }
                   >

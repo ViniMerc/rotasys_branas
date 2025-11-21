@@ -2,6 +2,7 @@ services:
   postgres_account:
     image: postgres:14.3-alpine
     environment:
+      POSTGRES_USER: postgres
       POSTGRES_PASSWORD: 123456
       POSTGRES_DB: app
     ports:
@@ -11,6 +12,7 @@ services:
   postgres_ride:
     image: postgres:14.3-alpine
     environment:
+      POSTGRES_USER: postgres
       POSTGRES_PASSWORD: 123456
       POSTGRES_DB: app
     ports:
@@ -20,6 +22,7 @@ services:
   postgres_payment:
     image: postgres:14.3-alpine
     environment:
+      POSTGRES_USER: postgres
       POSTGRES_PASSWORD: 123456
       POSTGRES_DB: app
     ports:

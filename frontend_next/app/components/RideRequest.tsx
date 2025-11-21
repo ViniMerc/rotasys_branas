@@ -1,4 +1,14 @@
-import axios from "axios";
+import axios, { AxiosError } from "axios";
+
+interface Account {
+  accountId: string;
+  isDriver: boolean;
+  [key: string]: unknown;
+}
+
+interface LoginResponse {
+  accountId: string;
+}
 
 export default class RideRequest {
   email = "";
@@ -13,13 +23,19 @@ export default class RideRequest {
 
   // TODO move this login for a higher order
   async login() {
-    const input = {
-      email: this.email || "john.doe0.5846046343365061@gmail.com",
-      password: this.password || "123456",
-    };
-    const response = await axios.post("http://localhost:3001/login", input);
-    const output = response.data;
-    this.accountId = output.accountId;
+    try {
+      const input = {
+        email: this.email || "john.doe0.5846046343365061@gmail.com",
+        password: this.password || "123456",
+      };
+      const response = await axios.post<LoginResponse>("http://localhost:3001/login", input);
+      const output = response.data;
+      this.accountId = output.accountId;
+    } catch (error) {
+      console.error("Login error:", error);
+      const axiosError = error as AxiosError<{ message?: string }>;
+      throw new Error(axiosError.response?.data?.message || "Failed to login");
+    }
   }
 
   //TODO change id to something better
@@ -28,38 +44,51 @@ export default class RideRequest {
   }
 
   async requestRide() {
-    const input = {
-      accountId: this.accountId,
-      fromLat: this.fromLat || -27.584905257808835,
-      fromLong: this.fromLong || -48.545022195325124,
-      toLat: this.toLat || -27.496887588317275,
-      toLong: this.toLong || -48.522234807851476,
-    };
+    try {
+      const input = {
+        accountId: this.accountId,
+        fromLat: this.fromLat || -27.584905257808835,
+        fromLong: this.fromLong || -48.545022195325124,
+        toLat: this.toLat || -27.496887588317275,
+        toLong: this.toLong || -48.522234807851476,
+      };
 
-    const newRide = await axios.post(
-      "http://localhost:3000/request_ride",
-      input
-    );
+      const newRide = await axios.post(
+        "http://localhost:3000/request_ride",
+        input
+      );
 
-    this.status = "requested";
+      this.status = "requested";
 
-    if (!newRide) {
-      return "Já existe uma corrida para esse passageiro em aberto";
-    }
+      if (!newRide?.data) {
+        return "Já existe uma corrida para esse passageiro em aberto";
+      }
 
-    //TODO Add a loading
-    const listOfAccounts = await axios.get("http://localhost:3001/accounts");
+      //TODO Add a loading
+      const listOfAccounts = await axios.get<Account[]>("http://localhost:3001/accounts");
 
-    const listOfDrivers = listOfAccounts.data.map(
-      (item: any) => item.isDriver === true
-    );
+      const listOfDrivers = listOfAccounts.data.filter(
+        (item) => item.isDriver === true
+      );
 
-    setTimeout(() => {
+      if (listOfDrivers.length === 0) {
+        throw new Error("No drivers available");
+      }
+
+      // Wait for driver assignment (simulating driver acceptance)
+      await new Promise((resolve) => setTimeout(resolve, 4000));
+      
       this.driverId = listOfDrivers[0].accountId;
-    }, 4000);
+      this.status = "accepted";
 
-    this.status = "accepted";
-
-	console.log(this.driverId)
+      console.log(this.driverId);
+    } catch (error) {
+      console.error("Request ride error:", error);
+      const axiosError = error as AxiosError<{ message?: string }>;
+      if (axiosError.response?.status === 400 || axiosError.response?.status === 409) {
+        throw new Error(axiosError.response?.data?.message || "Já existe uma corrida para esse passageiro em aberto");
+      }
+      throw new Error(axiosError.message || "Failed to request ride");
+    }
   }
 }

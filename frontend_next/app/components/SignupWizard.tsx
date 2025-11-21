@@ -1,4 +1,17 @@
-import axios from "axios";
+import axios, { AxiosError } from "axios";
+
+interface SignupResponse {
+	accountId: string;
+}
+
+interface SignupInput {
+	name: string;
+	email: string;
+	cpf: string;
+	isPassenger: boolean;
+	isDriver: boolean;
+	carPlate: string;
+}
 
 export default class SignupWizard {
 	step = 1;
@@ -87,27 +100,32 @@ export default class SignupWizard {
 		return progress;
 	}
 
-	sendMessage() {
-
-		this.successMessage = "Conta criada com sucesso!";
-	}
 
 	async confirm() {
 		if (!this.validate()) return;
-		const input = {
-			name: this.name,
-			email: this.email,
-			cpf: this.cpf,
-			isPassenger: this.isPassenger,
-			isDriver: this.isDriver,
-			carPlate: this.carPlate,
+		
+		try {
+			const input: SignupInput = {
+				name: this.name,
+				email: this.email,
+				cpf: this.cpf,
+				isPassenger: this.isPassenger,
+				isDriver: this.isDriver,
+				carPlate: this.carPlate,
+			};
+
+			const response = await axios.post<SignupResponse>("http://localhost:3001/signup", input);
+
+			const output = response.data;
+
+			this.accountId = output.accountId;
+			this.successMessage = "Conta criada com sucesso!";
+		} catch (error) {
+			console.error("Signup error:", error);
+			const axiosError = error as AxiosError<{ message?: string }>;
+			this.errorMessage = axiosError.response?.data?.message || "Erro ao criar conta. Tente novamente.";
+			throw error;
 		}
-
-		const response = await axios.post("http://localhost:3001/signup", input);
-
-		const output = response.data;
-
-		this.accountId = output.accountId;
 	}
 
 
@@ -122,7 +140,7 @@ export default class SignupWizard {
 		this.carPlate = "AAA9999"
 	}
 
-		populatePassenger() {
+	populatePassenger() {
 		this.isPassenger = true;
 		this.name = "Passenger Doe";
 		this.email = `john.doe${Math.random()}@gmail.com`;
