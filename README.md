@@ -8,11 +8,12 @@ https://branas.io
 ---
 ## 🧩 Descrição do Projeto
 
-O projeto é composto por **3 Microservices independentes**, executando simultaneamente nas portas:
+O projeto é composto por **3 Microservices independentes** e um **Frontend Next.js**, executando simultaneamente nas portas:
 
-- **3000**
-- **3001**
-- **3002**
+- **3000** - Account Service
+- **3001** - Payment Service
+- **3002** - Ride Service
+- **3004** - Frontend Next.js
 
 ## Requisitos
 
@@ -23,14 +24,40 @@ O projeto é composto por **3 Microservices independentes**, executando simultan
 
 ## Executando
 
-### Rodar um serviço localmente (com nodemon)
+### Scripts Disponíveis na Raiz do Projeto
+
+O projeto possui scripts centralizados na raiz para facilitar o gerenciamento de todos os serviços:
+
+#### Instalar dependências de todos os serviços
 ```bash
+npm run install:all
+```
+Instala as dependências dos três microserviços (account, payment, ride) e do frontend em paralelo.
+
+#### Executar todos os serviços em modo desenvolvimento
+```bash
+npm run dev
+# ou
+npm start
+```
+Inicia os três microserviços com `nodemon` e o frontend Next.js na porta **3004** simultaneamente.
+
+#### Executar todos os testes
+```bash
+npm test
+```
+Executa os testes de todos os microserviços e do frontend em paralelo.
+
+### Rodar um serviço individualmente
+
+Para executar um microserviço específico, entre na pasta do serviço e execute:
+```bash
+cd backend/account  # ou payment, ou ride
 npx nodemon src/main.ts
 ```
 
 ### Rodar toda a stack com Docker Compose
 ```bash
-
 docker compose up
 ```
 
@@ -42,8 +69,16 @@ psql -U <usuario> -d <banco> -f <arquivo.sql>
 
 ## Testes
 
-Executar testes configurados no serviço:
+### Executar testes de todos os serviços
 ```bash
+npm test
+```
+Executa os testes de todos os microserviços e do frontend em paralelo.
+
+### Executar testes de um serviço específico
+Para executar testes de um microserviço específico, entre na pasta do serviço e execute:
+```bash
+cd backend/account  # ou payment, ou ride
 npx jest
 ```
 
