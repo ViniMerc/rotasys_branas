@@ -1,15 +1,56 @@
-Projeto de estudos criado apartir de: 
+# Projeto de Estudos – Clean Code e Clean Architecture
 
-Este conteúdo é parte do curso Clean Code e Clean Architecture da Branas.io
+Este projeto foi desenvolvido como parte dos estudos realizados a partir do curso **Clean Code e Clean Architecture**, ministrado por **Rodrigo Branas** na plataforma **Branas.io**.
 
-Para mais informações acesse:
-
+Para saber mais sobre o curso e seus conteúdos:  
 https://branas.io
 
-3 Microservices diferentes rodando em portas 3000 3001 3002
+---
+## 🧩 Descrição do Projeto
 
-npx nodemon /main.ts
+O projeto é composto por **3 Microservices independentes**, executando simultaneamente nas portas:
 
-docker compose 
+- **3000**
+- **3001**
+- **3002**
 
-psql dentro de .sql
+## Requisitos
+
+- Node.js 
+- npm / yarn / pnpm
+- Docker & Docker Compose (opcional para execução completa)
+- Postgresql (execução sem docker)
+
+## Executando
+
+### Rodar um serviço localmente (com nodemon)
+```bash
+npx nodemon src/main.ts
+```
+
+### Rodar toda a stack com Docker Compose
+```bash
+
+docker compose up
+```
+
+### Banco de dados
+PostgreSQL é usado pelo projeto. Para executar scripts SQL manualmente:
+```bash
+psql -U <usuario> -d <banco> -f <arquivo.sql>
+```
+
+## Testes
+
+Executar testes configurados no serviço:
+```bash
+npx jest
+```
+
+## Créditos
+
+Curso: Clean Code e Clean Architecture — Rodrigo Branas (Branas.io)
+
+## Licença
+
+Uso acadêmico / estudo — sem finalidade comercial.
