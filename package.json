@@ -1,0 +1,15 @@
+{
+  "name": "rotasys-branas",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "install:all": "concurrently -n account,payment,ride,frontend -c blue,green,yellow,magenta \"cd backend/account && npm install\" \"cd backend/payment && npm install\" \"cd backend/ride && npm install\" \"cd frontend_next && npm install\"",
+    "test": "concurrently -n account,payment,ride,frontend -c blue,green,yellow,magenta \"cd backend/account && npx jest\" \"cd backend/payment && npx jest\" \"cd backend/ride && npx jest\" \"cd frontend_next && npm test\"",
+    "dev": "concurrently -n account,payment,ride,frontend -c blue,green,yellow,magenta \"cd backend/account && npx nodemon src/main.ts\" \"cd backend/payment && npx nodemon src/main.ts\" \"cd backend/ride && npx nodemon src/main.ts\" \"cd frontend_next && npm run dev -- -p 3004\"",
+    "start": "npm run dev"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
+
