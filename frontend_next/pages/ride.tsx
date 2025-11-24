@@ -75,6 +75,7 @@ function RidePage() {
                     fullWidth
                     label="Email"
                     type="email"
+                    title="Email"
                     value={ride.email}
                     onChange={(e) => {
                       reload(() => (ride.email = e.target.value));
@@ -85,6 +86,7 @@ function RidePage() {
                     fullWidth
                     label="Senha"
                     type="password"
+                    title="Senha"
                     value={ride.password}
                     onChange={(e) => {
                       reload(() => (ride.password = e.target.value));
