@@ -15,7 +15,7 @@ export default class GetRide implements UseCase {
 		const ride = await this.rideRepository.getRideById(rideId);
 		const passenger = await this.accountRepository.getAccountById(ride.accountId);
 		const lastPosition = await this.positionRepository.getLastPositionFromRideId(rideId);
-		console.log(passenger)
+		// console.log(passenger)
 		return {
 			rideId: ride.rideId,
 			accountId: ride.accountId,

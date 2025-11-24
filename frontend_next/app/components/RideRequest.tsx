@@ -28,7 +28,10 @@ export default class RideRequest {
         email: this.email || "john.doe0.5846046343365061@gmail.com",
         password: this.password || "123456",
       };
-      const response = await axios.post<LoginResponse>("http://localhost:3001/login", input);
+      const response = await axios.post<LoginResponse>(
+        "http://localhost:3001/login",
+        input
+      );
       const output = response.data;
       this.accountId = output.accountId;
     } catch (error) {
@@ -65,7 +68,9 @@ export default class RideRequest {
       }
 
       //TODO Add a loading
-      const listOfAccounts = await axios.get<Account[]>("http://localhost:3001/accounts");
+      const listOfAccounts = await axios.get<Account[]>(
+        "http://localhost:3001/accounts"
+      );
 
       const listOfDrivers = listOfAccounts.data.filter(
         (item) => item.isDriver === true
@@ -77,16 +82,22 @@ export default class RideRequest {
 
       // Wait for driver assignment (simulating driver acceptance)
       await new Promise((resolve) => setTimeout(resolve, 4000));
-      
+
       this.driverId = listOfDrivers[0].accountId;
       this.status = "accepted";
 
-      console.log(this.driverId);
+      //  console.log(this.driverId);
     } catch (error) {
       console.error("Request ride error:", error);
       const axiosError = error as AxiosError<{ message?: string }>;
-      if (axiosError.response?.status === 400 || axiosError.response?.status === 409) {
-        throw new Error(axiosError.response?.data?.message || "Já existe uma corrida para esse passageiro em aberto");
+      if (
+        axiosError.response?.status === 400 ||
+        axiosError.response?.status === 409
+      ) {
+        throw new Error(
+          axiosError.response?.data?.message ||
+            "Já existe uma corrida para esse passageiro em aberto"
+        );
       }
       throw new Error(axiosError.message || "Failed to request ride");
     }

@@ -11,7 +11,7 @@ export default class GetPayment implements UseCase {
 	async execute(paymentId: string): Promise<any> {
  
 		const transaction = await this.paymenteRepository.getPaymentById(paymentId)
-		console.log(transaction)
+		// console.log(transaction)
 		return transaction
 	}
 
